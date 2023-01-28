@@ -1,0 +1,39 @@
+.login_background {
+  -fx-background-image: url("../images/background.jpg");
+  -fx-background-size: 100%;
+  -fx-background-position: 50% 20%;
+  -fx-background-position: 50% 30%;
+}
+
+.background2 {
+  -fx-background-image: url("../images/background2.jpg");
+  -fx-background-size: 100%;
+  -fx-background-position: 50% 20%;
+  -fx-background-position: 50% 30%;
+}
+
+.perdoruesi_field {
+  -fx-background-color: white;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: 3% 50%;
+  -fx-background-size: 30px 30px;
+  -fx-background-radius: 30 30 30 30;
+  -fx-border-width: 0;
+  -fx-text-fill: black;
+  -fx-prompt-text-fill: black;
+}
+.fjalekalimi_field {
+  -fx-background-color: white;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: 3% 50%;
+  -fx-background-size: 33px 33px;
+  -fx-background-radius: 30 30 30 30;
+  -fx-border-width: 0;
+  -fx-text-fill: black;
+  -fx-prompt-text-fill: black;
+}
+
+.vbox_login {
+    -fx-background-color: linear-gradient(to bottom left, #503927,#dc3d4b);
+	
+}

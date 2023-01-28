@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="1077.0" styleClass="vbox_login" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterUniversityController">
+   <left>
+      <AnchorPane fx:id="anpaneUni" prefHeight="598.0" prefWidth="665.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox fx:id="hBoxImage" alignment="CENTER" layoutX="3.0" layoutY="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <ImageView fx:id="imageview" fitHeight="132.0" fitWidth="314.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <Label fx:id="lblRegisterUni" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="80.0" layoutY="20.0" text="REGISTER UNIVERSITY:" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblUniName" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="60.0" layoutY="236.0" prefHeight="40.0" prefWidth="200.0" text="UNIVERSITY NAME:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUniName" layoutX="324.0" layoutY="236.0" prefHeight="40.0" prefWidth="279.0" />
+            <Label fx:id="lblAddress" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="65.0" layoutY="300.0" prefHeight="40.0" prefWidth="190.0" text="ADDRESS:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCity" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="275.0" layoutY="300.0" prefHeight="40.0" prefWidth="160.0" text="CITY:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCountry" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="455.0" layoutY="300.0" prefHeight="40.0" prefWidth="145.0" text="COUNTRY:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtAddress" layoutX="65.0" layoutY="345.0" prefHeight="40.0" prefWidth="190.0" />
+            <TextField fx:id="txtCity" layoutX="275.0" layoutY="345.0" prefHeight="40.0" prefWidth="160.0" />
+            <TextField fx:id="txtCountry" layoutX="455.0" layoutY="345.0" prefHeight="40.0" prefWidth="145.0" />
+            <Label fx:id="lblEmailUni" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="60.0" layoutY="415.0" prefHeight="40.0" prefWidth="240.0" text="EMAIL:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblContact" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="365.0" layoutY="415.0" prefHeight="40.0" prefWidth="240.0" text="CONTACT:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtEmailUni" layoutX="60.0" layoutY="465.0" prefHeight="40.0" prefWidth="240.0" />
+            <TextField fx:id="txtContact" layoutX="365.0" layoutY="465.0" prefHeight="40.0" prefWidth="240.0" />
+            <Button fx:id="btnUpload" layoutX="475.0" layoutY="513.0" mnemonicParsing="false" onAction="#upload" prefHeight="31.0" prefWidth="129.0" text="UPLOAD LOGO">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnSaveUni" layoutX="259.0" layoutY="545.0" mnemonicParsing="false" onAction="#saveUni" prefHeight="36.0" prefWidth="130.0" text="SAVE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane fx:id="anpaneAdmin" disable="true" prefHeight="598.0" prefWidth="483.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lblRegisterAdmin" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutY="138.0" text="REGISTER ADMINISTRATOR:" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblUsername" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="32.0" layoutY="225.0" prefHeight="40.0" prefWidth="162.0" text="USERNAME:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUsername" layoutX="194.0" layoutY="225.0" prefHeight="40.0" prefWidth="185.0" />
+            <Label fx:id="lblEmailAdmin" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="32.0" layoutY="282.0" prefHeight="40.0" prefWidth="162.0" text="EMAIL:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtEmailAdmin" layoutX="194.0" layoutY="282.0" prefHeight="40.0" prefWidth="185.0" />
+            <Label fx:id="lblPassword" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="32.0" layoutY="336.0" prefHeight="40.0" prefWidth="162.0" text="PASSWORD:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="txtPassword" layoutX="194.0" layoutY="336.0" prefHeight="40.0" prefWidth="185.0" />
+            <Button fx:id="btnSaveAdmin" layoutX="140.0" layoutY="484.0" mnemonicParsing="false" onAction="#saveAdmin" prefHeight="36.0" prefWidth="130.0" text="SAVE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
