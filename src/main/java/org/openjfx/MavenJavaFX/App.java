@@ -56,7 +56,7 @@ public class App extends Application {
             });
         } else {
 
-            root = FXMLLoader.load(getClass().getResource("/views/MainPage.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
             scene = new Scene(root);
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();

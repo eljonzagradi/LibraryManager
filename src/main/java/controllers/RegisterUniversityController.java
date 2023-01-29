@@ -69,7 +69,7 @@ public class RegisterUniversityController implements Initializable {
 
         UnaryOperator < Change > OnlyStringsAndNumbers = change -> {
             String input = change.getText();
-            if (input.matches("[a-zA-Z]*")) {
+            if (input.matches("[a-zA-Z0-9]*")) {
                 return change;
             }
             return null;

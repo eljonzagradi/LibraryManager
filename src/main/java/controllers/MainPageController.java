@@ -36,6 +36,10 @@ public class MainPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        borderpane.setPrefWidth(bounds.getWidth());
+        borderpane.setPrefHeight(bounds.getHeight());
 
     }
 
@@ -74,7 +78,9 @@ public class MainPageController implements Initializable {
 
         PageLoader loader = new PageLoader();
         Pane view = loader.getPage("University");
-        borderpane.setCenter(view);
+        stackpane.getChildren().clear();
+        stackpane.getChildren().add(view);
+//        borderpane.setCenter(view);
         
     }
 
@@ -82,23 +88,27 @@ public class MainPageController implements Initializable {
 
         PageLoader loader = new PageLoader();
         Pane view = loader.getPage("Students");
-        borderpane.setCenter(view);
-
+        stackpane.getChildren().clear();
+        stackpane.getChildren().add(view);
+//        borderpane.setCenter(view);
     }
 
     @FXML public void openBooks() {
 
         PageLoader loader = new PageLoader();
         Pane view = loader.getPage("Books");
-        borderpane.setCenter(view);
-
+        stackpane.getChildren().clear();
+        stackpane.getChildren().add(view);
+//        borderpane.setCenter(view);
     }
 
     @FXML public void openUsers() {
 
         PageLoader loader = new PageLoader();
         Pane view = loader.getPage("Users");
-        borderpane.setCenter(view);
+        stackpane.getChildren().clear();
+        stackpane.getChildren().add(view);
+//        borderpane.setCenter(view);
 
     }
 

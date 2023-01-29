@@ -96,7 +96,6 @@ public class LoginController implements Initializable {
         ResultSet result = null;
 
         String sqlQuery = "SELECT * FROM users WHERE username = ? AND password = ?;";
-        String password = "Metro2020@";
 
         try {
             select = Database.statement(sqlQuery);
@@ -122,12 +121,12 @@ public class LoginController implements Initializable {
 
                 Screen screen = Screen.getPrimary();
                 Rectangle2D bounds = screen.getVisualBounds();
+                stage.setX(bounds.getMinX());
+                stage.setY(bounds.getMinY());
                 stage.setWidth(bounds.getWidth());
                 stage.setHeight(bounds.getHeight());
-
-                stage.setMaximized(true);
-
-                stage.setResizable(true);
+                stage.setMaximized(false);
+                stage.setResizable(false);
 
                 stage.show();
 
@@ -142,10 +141,8 @@ public class LoginController implements Initializable {
                 });
 
             } else {
-                General.INFORMATION("Information", "Wrong username or password" +
-                    "\n\nThis is your password btw: " + password);
+                General.INFORMATION("Information", "Wrong username or password");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
