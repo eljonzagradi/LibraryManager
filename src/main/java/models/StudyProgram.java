@@ -1,13 +1,13 @@
 package models;
 
 public class StudyProgram {
-	
+
 	private int studyprogramID;
 	private String name;
 	private int duration;
 	private String faculty;
 	private int noStudents;
-	
+
 	public StudyProgram(int studyprogramID, String name, int duration, String faculty, int noStudents) {
 		super();
 		this.studyprogramID = studyprogramID;
@@ -56,5 +56,5 @@ public class StudyProgram {
 	public void setFaculty(String faculty) {
 		this.faculty = faculty;
 	}
-	
+
 }

@@ -60,7 +60,8 @@ public class MainPageController implements Initializable {
         root.requestFocus();
 
         stage.setOnCloseRequest(new EventHandler < WindowEvent > () {
-            public void handle(WindowEvent we) {
+            @Override
+			public void handle(WindowEvent we) {
                 try {
                     System.exit(1);
                     Database.disconnect();
@@ -81,7 +82,7 @@ public class MainPageController implements Initializable {
         stackpane.getChildren().clear();
         stackpane.getChildren().add(view);
 //        borderpane.setCenter(view);
-        
+
     }
 
     @FXML public void openStudents() {

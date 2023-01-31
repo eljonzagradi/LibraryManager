@@ -1,7 +1,7 @@
 package models;
 
 public class Book {
-	
+
 	private int bookID;
 	private String title;
 	private String category;
@@ -11,8 +11,8 @@ public class Book {
 	private String publisher;
 	private String barcode;
 	private int copies;
-	
-	public Book(int bookID, String title, String category, 
+
+	public Book(int bookID, String title, String category,
 			int pages, String language,
 			String author, String publisher,String barcode, int copies) {
 		super();
@@ -99,5 +99,5 @@ public class Book {
 	public void setBarcode(String barcode) {
 		this.barcode = barcode;
 	}
-	
+
 }

@@ -486,13 +486,13 @@ public class BooksController implements Initializable {
 
     @FXML public void uploadCVS() {
 
-        if (General.CONFIRMATION("Information", "Before you procced please make sure that all " +
+        if (!General.CONFIRMATION("Information", "Before you procced please make sure that all " +
                 "your data is correct and follows the rules below:\n" +
                 "1) No empty cells\n" +
                 "2) No duplicate barcodes\n" +
                 "If these rules are not followed the import process will be " +
                 "interrupted or the faulty records will not be recorded\n" +
-                "Do you wish to continue ?") == false) {
+                "Do you wish to continue ?")) {
             return;
         }
 

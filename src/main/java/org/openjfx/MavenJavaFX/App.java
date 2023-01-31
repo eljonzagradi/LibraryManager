@@ -29,7 +29,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        if (checkDB() == false) {
+        if (!checkDB()) {
 
             root = FXMLLoader.load(getClass().getResource("/views/RegisterUniversity.fxml"));
             scene = new Scene(root);
@@ -45,7 +45,8 @@ public class App extends Application {
             root.requestFocus();
 
             stage.setOnCloseRequest(new EventHandler < WindowEvent > () {
-                public void handle(WindowEvent we) {
+                @Override
+				public void handle(WindowEvent we) {
                     try {
                         System.exit(1);
                         Database.disconnect();
@@ -70,7 +71,8 @@ public class App extends Application {
             root.requestFocus();
 
             stage.setOnCloseRequest(new EventHandler < WindowEvent > () {
-                public void handle(WindowEvent we) {
+                @Override
+				public void handle(WindowEvent we) {
                     try {
                         System.exit(1);
                         Database.disconnect();

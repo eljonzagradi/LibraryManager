@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Database {
-	
+
 	static Connection connection = null;
 
     static String url = "jdbc:mysql://localhost:3306/eljonzagradi";
@@ -27,7 +27,7 @@ public class Database {
 
         return connection;
     }
-    
+
 	public static void disconnect() throws SQLException {
 		try {
 			if (connection != null && !connection.isClosed()) {

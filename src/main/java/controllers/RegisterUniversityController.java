@@ -112,7 +112,7 @@ public class RegisterUniversityController implements Initializable {
             return;
         }
 
-        if (isValidEmail(txtEmailUni.getText()) == false) {
+        if (!isValidEmail(txtEmailUni.getText())) {
             return;
         }
 
@@ -208,11 +208,7 @@ public class RegisterUniversityController implements Initializable {
             return;
         }
 
-        if (isValidEmail(txtEmailAdmin.getText()) == false) {
-            return;
-        }
-
-        if (isValidPassword(txtPassword.getText()) == false) {
+        if (!isValidEmail(txtEmailAdmin.getText()) || !isValidPassword(txtPassword.getText())) {
             return;
         }
 
@@ -287,7 +283,7 @@ public class RegisterUniversityController implements Initializable {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
 
-        if (matcher.matches() == false) {
+        if (!matcher.matches()) {
             General.WARNING("Warning", "This email is not valid please recheck it");
             return false;
         }

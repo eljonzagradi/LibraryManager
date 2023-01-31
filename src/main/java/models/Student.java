@@ -3,7 +3,7 @@ package models;
 import java.sql.Date;
 
 public class Student {
-	
+
 	private int studentID;
 	private String fullName;
 	private String studyprogram;
@@ -11,8 +11,8 @@ public class Student {
 	private String barcode;
 	private Date registrationDate;
 	private String status;
-	
-	public Student(int studentID, String fullName, String studyprogram, int year, 
+
+	public Student(int studentID, String fullName, String studyprogram, int year,
 			String barcode, Date registrationDate) {
 		super();
 		this.studentID = studentID;
@@ -78,5 +78,5 @@ public class Student {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 }

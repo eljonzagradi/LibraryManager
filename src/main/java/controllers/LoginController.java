@@ -131,7 +131,8 @@ public class LoginController implements Initializable {
                 stage.show();
 
                 stage.setOnCloseRequest(new EventHandler < WindowEvent > () {
-                    public void handle(WindowEvent we) {
+                    @Override
+					public void handle(WindowEvent we) {
                         try {
                             System.exit(1);
                         } catch (Exception e) {

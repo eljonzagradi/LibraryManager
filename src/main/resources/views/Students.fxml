@@ -21,7 +21,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblStudyProgram" layoutX="393.0" layoutY="110.0" prefHeight="18.0" prefWidth="180.0" text="Study Program:" textFill="WHITE">
+      <Label fx:id="lblStudyProgram" layoutX="383.0" layoutY="110.0" prefHeight="18.0" prefWidth="180.0" text="Study Program:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -31,9 +31,9 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtStudent" layoutX="161.0" layoutY="135.0" prefHeight="30.0" prefWidth="180.0" promptText="Search Student" />
-      <ComboBox fx:id="cmbStudyProgram1" editable="true" layoutX="393.0" layoutY="135.0" prefHeight="30.0" prefWidth="180.0" promptText="-Choose Study Program-" visibleRowCount="5" />
-      <TextField fx:id="txtBarcode" layoutX="623.0" layoutY="135.0" prefHeight="30.0" prefWidth="180.0" promptText="Serach Barcode" />
+      <TextField fx:id="txtStudent" layoutX="161.0" layoutY="135.0" prefHeight="36.0" prefWidth="180.0" promptText="Search Student" />
+      <ComboBox fx:id="cmbStudyProgram1" layoutX="383.0" layoutY="135.0" prefHeight="37.0" prefWidth="192.0" promptText="-Choose Study Program-" styleClass="combobox" visibleRowCount="5" />
+      <TextField fx:id="txtBarcode" layoutX="623.0" layoutY="135.0" prefHeight="36.0" prefWidth="180.0" promptText="Serach Barcode" />
       <TableView fx:id="tblStudents" layoutX="34.0" layoutY="204.0" prefHeight="494.0" prefWidth="824.0">
         <columns>
           <TableColumn fx:id="tblColStudent" prefWidth="176.79998397827148" text="Student" />
@@ -64,13 +64,13 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cmbStudyProgram2" layoutX="31.0" layoutY="88.0" prefHeight="30.0" prefWidth="180.0" promptText="Choose Study Program" visibleRowCount="5" />
+            <ComboBox fx:id="cmbStudyProgram2" layoutX="31.0" layoutY="88.0" prefHeight="30.0" prefWidth="180.0" promptText="Choose Study Program" styleClass="combobox" visibleRowCount="5" />
             <Label fx:id="lblYear" layoutX="31.0" layoutY="137.0" prefHeight="18.0" prefWidth="180.0" text="Year of Study:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cmbYear" layoutX="31.0" layoutY="159.0" prefHeight="30.0" prefWidth="180.0" promptText="Choose Year of Study" visibleRowCount="5" />
+            <ComboBox fx:id="cmbYear" layoutX="31.0" layoutY="159.0" prefHeight="30.0" prefWidth="180.0" promptText="Choose Year of Study" styleClass="combobox" visibleRowCount="5" />
             <Label fx:id="lblBarcode" layoutX="31.0" layoutY="209.0" prefHeight="18.0" prefWidth="180.0" text="Barcode:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -97,7 +97,7 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
-      <Button fx:id="btnRefresh" layoutX="34.0" layoutY="135.0" mnemonicParsing="false" onAction="#refresh" prefHeight="30.0" prefWidth="73.0" text="Refresh">
+      <Button fx:id="btnRefresh" layoutX="34.0" layoutY="135.0" mnemonicParsing="false" onAction="#refresh" prefHeight="36.0" prefWidth="74.0" text="Refresh">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
