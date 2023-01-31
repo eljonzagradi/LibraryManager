@@ -12,25 +12,25 @@
 
 <AnchorPane fx:id="anpane" prefHeight="816.0" prefWidth="1536.0" styleClass="login_background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
 	<children>
-      <VBox alignment="CENTER" layoutX="600.0" layoutY="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="640.0" layoutY="40.0" prefHeight="776.0" prefWidth="357.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="620.0" AnchorPane.rightAnchor="559.0" AnchorPane.topAnchor="20.0">
          <children>
-      		<VBox fx:id="vBoxLogin" alignment="CENTER" prefWidth="336.0" spacing="10.0" styleClass="vbox_login" stylesheets="@../css/style.css">
+      		<VBox fx:id="vBoxLogin" alignment="CENTER" prefHeight="486.0" prefWidth="310.0" spacing="10.0" styleClass="vbox_login" stylesheets="@../css/style.css">
       			<children>
                   <StackPane fx:id="stackpane" maxHeight="150.0" VBox.vgrow="SOMETIMES">
                      <children>
-            				<Label fx:id="lblLogin" alignment="CENTER" prefHeight="52.0" prefWidth="296.0" text="LOGIN" textFill="#cccccc">
+            				<Label fx:id="lblLogin" alignment="CENTER" prefHeight="52.0" prefWidth="296.0" style="-fx-text-fill: cccccc;" text="LOGIN" textFill="#cccccc">
             					<font>
             						<Font name="System Bold" size="50.0" />
             					</font>
             				</Label>
                      </children>
                   </StackPane>
-      				<Label fx:id="lblUni" alignment="CENTER" prefHeight="56.0" prefWidth="296.0" textFill="#cccccc">
+      				<Label fx:id="lblUni" alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="278.0" style="-fx-text-fill: cccccc;" textAlignment="CENTER" textFill="#cccccc" wrapText="true">
       					<font>
       						<Font name="System Bold" size="15.0" />
       					</font>
       				</Label>
-      				<Label fx:id="lblUsername" alignment="CENTER" prefHeight="50.0" prefWidth="330.0" text="Username:" textAlignment="CENTER" textFill="WHITE">
+      				<Label fx:id="lblUsername" alignment="CENTER" prefHeight="50.0" prefWidth="330.0" style="-fx-text-fill: cccccc;" text="Username:" textAlignment="CENTER" textFill="WHITE">
       					<font>
       						<Font name="System Bold" size="30.0" />
       					</font>
@@ -40,7 +40,7 @@
       						<Font size="20.0" />
       					</font>
       				</TextField>
-      				<Label fx:id="lblPassword" alignment="CENTER" layoutX="30.0" layoutY="139.0" prefHeight="50.0" prefWidth="330.0" text="Password:" textAlignment="CENTER" textFill="WHITE">
+      				<Label fx:id="lblPassword" alignment="CENTER" layoutX="30.0" layoutY="139.0" prefHeight="50.0" prefWidth="330.0" style="-fx-text-fill: cccccc;" text="Password:" textAlignment="CENTER" textFill="WHITE">
       					<font>
       						<Font name="System Bold" size="30.0" />
       					</font>

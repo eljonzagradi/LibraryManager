@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="816.0" prefWidth="1536.0" styleClass="background2" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainPageController">
    <left>
       <VBox fx:id="vbox" alignment="CENTER" prefHeight="816.0" prefWidth="300.0" spacing="20.0" styleClass="vbox_login">

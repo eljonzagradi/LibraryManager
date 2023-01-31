@@ -37,3 +37,74 @@
     -fx-background-color: linear-gradient(to bottom left, #503927,#dc3d4b);
 	
 }
+
+.table-view {
+    -fx-font-size: 14px;
+    -fx-background-color: #EAE0D5;
+    -fx-padding: 10px;
+    -fx-border-color: #A0522D;
+    -fx-border-width: 0.5px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #A0522D;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-cell {
+    -fx-background-color: #EAE0D5;
+    -fx-text-fill: #A0522D;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+.table-view .frozen-column .table-cell {
+    -fx-background-color: #E5E5E5;
+    -fx-text-fill: #A0522D;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+.text-field {
+    -fx-background-color: #F5F5DC;
+    -fx-border-color: #A0522D;
+    -fx-border-width: 0.5px;
+    -fx-padding: 5px;
+}
+
+.combobox {
+    -fx-background-color: #F5F5DC;
+    -fx-border-color: #A0522D;
+    -fx-border-width: 0.5px;
+    -fx-padding: 5px;
+}
+
+.combobox:editable {
+    -fx-background-color: #F5F5DC;
+}
+
+.combobox-popup {
+    -fx-background-color: #EAE0D5;
+}
+
+.label {
+    -fx-text-fill: #A0522D;
+    -fx-font-weight: bold;
+}
+
+.button {
+    -fx-background-color: #A0522D;
+    -fx-text-fill: white;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+}
+
+.button:hover {
+    -fx-background-color:  #ddddc6;
+    -fx-text-fill: #A0522D;
+}

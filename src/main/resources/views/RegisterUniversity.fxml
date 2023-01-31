@@ -12,7 +12,7 @@
 
 <BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="1077.0" styleClass="vbox_login" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterUniversityController">
    <left>
-      <AnchorPane fx:id="anpaneUni" prefHeight="598.0" prefWidth="665.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anpaneUni" prefHeight="598.0" prefWidth="665.0" style="-fx-background-color: #ddddc6;" BorderPane.alignment="CENTER">
          <children>
             <HBox fx:id="hBoxImage" alignment="CENTER" layoutX="3.0" layoutY="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
@@ -74,7 +74,7 @@
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane fx:id="anpaneAdmin" disable="true" prefHeight="598.0" prefWidth="483.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anpaneAdmin" disable="true" prefHeight="598.0" prefWidth="483.0" style="-fx-background-color: #ddddc6;" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="lblRegisterAdmin" alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutY="138.0" text="REGISTER ADMINISTRATOR:" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
