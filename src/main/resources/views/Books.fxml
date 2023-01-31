@@ -16,7 +16,7 @@
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
    <children>
-      <Button fx:id="btnRefresh" layoutX="626.0" layoutY="140.0" mnemonicParsing="false" onAction="#refresh" prefHeight="43.0" prefWidth="180.0" text="Refresh">
+      <Button fx:id="btnRefresh" layoutX="667.0" layoutY="154.0" mnemonicParsing="false" onAction="#refresh" prefHeight="30.0" prefWidth="97.0" text="Refresh">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
@@ -35,9 +35,9 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtBookTitle" layoutX="168.0" layoutY="84.0" prefHeight="30.0" prefWidth="180.0" promptText="Search Title" />
-      <TextField fx:id="txtCategory" layoutX="168.0" layoutY="151.0" prefHeight="30.0" prefWidth="180.0" promptText="Serach Category:" />
-      <ComboBox fx:id="cmbLanguage" editable="true" layoutX="393.0" layoutY="151.0" prefHeight="30.0" prefWidth="180.0" promptText="-Chose Language-" />
+      <TextField fx:id="txtBookTitle" layoutX="168.0" layoutY="83.0" prefHeight="36.8" prefWidth="180.0" promptText="Search Title" />
+      <TextField fx:id="txtCategory" layoutX="168.0" layoutY="151.0" prefHeight="36.8" prefWidth="180.0" promptText="Serach Category:" />
+      <ComboBox fx:id="cmbLanguage" layoutX="393.0" layoutY="151.0" prefWidth="180.0" promptText="-Chose Language-" styleClass="combobox" />
       <Label fx:id="lblAuthor" layoutX="393.0" layoutY="56.0" prefHeight="18.0" prefWidth="180.0" text="Author:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -48,8 +48,8 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbAuthor1" editable="true" layoutX="393.0" layoutY="83.0" prefHeight="30.0" prefWidth="180.0" promptText="-Choose Author-" />
-      <TextField fx:id="txtBarcode1" layoutX="626.0" layoutY="83.0" prefHeight="30.0" prefWidth="180.0" promptText="Serach Barcode" />
+      <ComboBox fx:id="cmbAuthor1" layoutX="393.0" layoutY="83.0" prefWidth="180.0" promptText="-Choose Author-" styleClass="combobox" />
+      <TextField fx:id="txtBarcode1" layoutX="626.0" layoutY="83.0" prefHeight="36.8" prefWidth="180.0" promptText="Serach Barcode" />
       <TableView fx:id="tblBooks" layoutX="40.0" layoutY="201.0" prefHeight="502.0" prefWidth="867.0">
          <columns>
             <TableColumn fx:id="tblColBook" prefWidth="107.19997787475586" text="Book Title" />

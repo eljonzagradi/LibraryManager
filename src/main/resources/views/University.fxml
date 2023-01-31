@@ -70,10 +70,10 @@
       </Label>
       <TableView fx:id="tblStudyPrograms" layoutX="580.0" layoutY="279.0" prefHeight="200.0" prefWidth="626.0">
         <columns>
-          <TableColumn fx:id="tblColStudyProgram" prefWidth="121.5999755859375" text="Study Program" />
-          <TableColumn fx:id="tblColDuration" prefWidth="80.79998779296875" text="Duration" />
-            <TableColumn fx:id="tblColFaculty" prefWidth="287.99993896484375" text="Faculty" />
-            <TableColumn fx:id="tblColNoStudents" prefWidth="115.2000732421875" text="No of Students" />
+          <TableColumn fx:id="tblColStudyProgram" prefWidth="146.4000244140625" text="Study Program" />
+          <TableColumn fx:id="tblColDuration" prefWidth="78.39996337890625" text="Duration" />
+            <TableColumn fx:id="tblColFaculty" prefWidth="288.0" text="Faculty" />
+            <TableColumn fx:id="tblColNoStudents" prefWidth="90.4000244140625" text="Students No" />
         </columns>
       </TableView>
       <HBox fx:id="hBoxSP" alignment="CENTER" layoutX="576.0" layoutY="483.0" prefHeight="30.0" prefWidth="626.0" spacing="20.0">
