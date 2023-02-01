@@ -108,8 +108,13 @@ public class LoginController implements Initializable {
 
                 General.activeUserID = result.getInt(1);
                 General.activeUser = result.getString(2);
+                General.userCategory = result.getInt(5);
 
-                root = FXMLLoader.load(getClass().getResource("/views/MainPage.fxml"));
+                if (General.userCategory == 3) {
+                    root = FXMLLoader.load(getClass().getResource("/views/StudentView.fxml"));
+                } else {
+                    root = FXMLLoader.load(getClass().getResource("/views/MainPage.fxml"));
+                }
 
                 txtUsername.setText("");
                 txtPassword.setText("");
@@ -117,7 +122,6 @@ public class LoginController implements Initializable {
                 scene = new Scene(root);
 
                 stage.setScene(scene);
-                stage.setTitle("myLibrary.al");
 
                 Screen screen = Screen.getPrimary();
                 Rectangle2D bounds = screen.getVisualBounds();
@@ -132,7 +136,7 @@ public class LoginController implements Initializable {
 
                 stage.setOnCloseRequest(new EventHandler < WindowEvent > () {
                     @Override
-					public void handle(WindowEvent we) {
+                    public void handle(WindowEvent we) {
                         try {
                             System.exit(1);
                         } catch (Exception e) {

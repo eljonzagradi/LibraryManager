@@ -18,6 +18,7 @@ public class General {
     public static boolean hasLogo;
     public static int activeUserID;
     public static String activeUser;
+	public static int userCategory;
 
     public static String encrypt(String key, String initVector, String value) {
         try {

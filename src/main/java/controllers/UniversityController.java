@@ -74,6 +74,11 @@ public class UniversityController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	
+    	if(General.userCategory != 1) {
+    		btnEditUni.setVisible(false);
+    		hBoxSP.setVisible(false);
+    	}
 
         tblColStudyProgram.setCellValueFactory(new PropertyValueFactory < > ("name"));
         tblColDuration.setCellValueFactory(new PropertyValueFactory < > ("duration"));

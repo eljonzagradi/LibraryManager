@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,10 @@ import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -23,6 +27,8 @@ import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import models.Database;
 import models.General;
 import models.User;
@@ -321,12 +327,13 @@ public class UsersController implements Initializable {
         return roleId;
     }
 
-    @FXML public void registerUser() {
-
-        btnRegisterUser.setDisable(true);
-        btnCancel.setVisible(true);
-        btnSave.setVisible(true);
-
+    @FXML public void registerUser() throws IOException {
+    	Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/views/RegisterUser.fxml"))));
+        stage.setMaximized(false);
+        stage.setResizable(false);
+        stage.showAndWait();
+        getUsers();
     }
 
     @FXML public void cancel() {

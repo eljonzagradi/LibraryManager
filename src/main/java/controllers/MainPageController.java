@@ -30,7 +30,7 @@ public class MainPageController implements Initializable {
     @FXML BorderPane borderpane;
     @FXML StackPane stackpane;
     @FXML VBox vbox;
-    @FXML Button btnLogOut;
+    @FXML Button btnUsers, btnLogOut;
 
     public static Parent root;
 
@@ -40,6 +40,10 @@ public class MainPageController implements Initializable {
         Rectangle2D bounds = screen.getVisualBounds();
         borderpane.setPrefWidth(bounds.getWidth());
         borderpane.setPrefHeight(bounds.getHeight());
+        
+        if(General.userCategory != 1) {
+        	vbox.getChildren().remove(btnUsers);
+        }
 
     }
 

@@ -69,6 +69,13 @@ public class StudentsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	
+    	if(General.userCategory != 1) {
+    		btnDownload.setVisible(false);
+    		btnImport.setVisible(false);
+    		btnRegister.setVisible(false);
+    		btnModify.setVisible(false);
+    	}
 
         tblColStudyProgram.setCellValueFactory(new PropertyValueFactory < > ("studyprogram"));
         tblColRegistrationDate.setCellValueFactory(new PropertyValueFactory < > ("registrationDate"));

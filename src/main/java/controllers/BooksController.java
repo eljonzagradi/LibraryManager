@@ -70,6 +70,13 @@ public class BooksController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	
+    	if(General.userCategory != 1) {
+    		btnDownload.setVisible(false);
+    		btnImport.setVisible(false);
+    		btnRegister.setVisible(false);
+    		btnEdit.setVisible(false);
+    	}
 
         tblColAuthor.setCellValueFactory(new PropertyValueFactory < > ("author"));
         tblColBarcode.setCellValueFactory(new PropertyValueFactory < > ("barcode"));
