@@ -99,5 +99,10 @@ public class Book {
 	public void setBarcode(String barcode) {
 		this.barcode = barcode;
 	}
+	
+	@Override
+	public String toString() {
+		return title;
+	}
 
 }

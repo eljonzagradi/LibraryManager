@@ -10,6 +10,7 @@
    <left>
       <VBox fx:id="vbox" alignment="CENTER" prefHeight="816.0" prefWidth="300.0" spacing="20.0" styleClass="vbox_login">
          <children>
+            <Button layoutX="31.0" layoutY="232.0" mnemonicParsing="false" onAction="#openBorrow" prefHeight="58.0" prefWidth="258.0" text="Library" />
             <Button layoutX="44.0" layoutY="311.0" mnemonicParsing="false" onAction="#openUni" prefHeight="58.0" prefWidth="258.0" text="University" />
             <Button layoutX="44.0" layoutY="389.0" mnemonicParsing="false" onAction="#openStudents" prefHeight="58.0" prefWidth="258.0" text="Students" />
             <Button layoutX="44.0" layoutY="350.0" mnemonicParsing="false" onAction="#openBooks" prefHeight="58.0" prefWidth="258.0" text="Books" />

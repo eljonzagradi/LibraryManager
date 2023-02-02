@@ -78,7 +78,17 @@ public class MainPageController implements Initializable {
         General.activeUser = "";
         LoginController.stage.close();
     }
+        
+    @FXML public void openBorrow() {
 
+        PageLoader loader = new PageLoader();
+        Pane view = loader.getPage("Borrowings");
+        stackpane.getChildren().clear();
+        stackpane.getChildren().add(view);
+//        borderpane.setCenter(view);
+
+    }
+    
     @FXML public void openUni() {
 
         PageLoader loader = new PageLoader();

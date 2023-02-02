@@ -79,3 +79,10 @@
     -fx-background-color: #ddddc6;
     -fx-text-fill: #a0522d;
 }
+.costum.label {
+	-fx-background-color: white; 
+	-fx-font-size: 18;
+	-fx-font-weight: bold;
+	-fx-border-width: 2;
+    -fx-border-color: black;
+    }

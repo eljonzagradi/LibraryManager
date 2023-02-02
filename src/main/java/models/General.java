@@ -19,6 +19,8 @@ public class General {
     public static int activeUserID;
     public static String activeUser;
 	public static int userCategory;
+	public static String studentBarcode = null;
+	public static String bookBarcode = null;
 
     public static String encrypt(String key, String initVector, String value) {
         try {
