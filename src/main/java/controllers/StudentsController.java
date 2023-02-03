@@ -255,6 +255,7 @@ public class StudentsController implements Initializable {
         cmbStudyProgram2.setValue(null);
         cmbYear.setValue(null);
         txtBarkode.setText(null);
+        General.needsSave = true;
     }
 
     @FXML public void editStudent() {
@@ -275,6 +276,8 @@ public class StudentsController implements Initializable {
             pane.setVisible(true);
             btnRegister.setDisable(true);
             btnModify.setDisable(true);
+            General.needsSave = true;
+
         } else {
             General.WARNING("Warning", "Please select the record you want to edit !");
         }
@@ -358,6 +361,8 @@ public class StudentsController implements Initializable {
         btnRegister.setDisable(false);
         btnModify.setDisable(false);
         tblStudents.setDisable(false);
+        General.needsSave = false;
+        tblStudents.getSelectionModel().clearSelection();
     }
 
     @FXML public void refresh() {

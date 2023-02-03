@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -27,7 +26,7 @@ import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Screen;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Database;
 import models.General;
@@ -81,6 +80,7 @@ public class UsersController implements Initializable {
                 user.setModified(true);
                 btnSave.setVisible(true);
                 btnCancel.setVisible(true);
+                General.needsSave = true;
             } else {
                 tblUsers.getColumns().get(0).setVisible(false);
                 tblUsers.getColumns().get(0).setVisible(true);
@@ -104,6 +104,7 @@ public class UsersController implements Initializable {
             user.setModified(true);
             btnSave.setVisible(true);
             btnCancel.setVisible(true);
+            General.needsSave = true;
 
         });
 
@@ -128,6 +129,7 @@ public class UsersController implements Initializable {
                     user.setModified(true);
                     btnSave.setVisible(true);
                     btnCancel.setVisible(true);
+                    General.needsSave = true;
                 } else {
                     General.WARNING("Warning", "There must be at least one 'Administrator' in the system!");
                     ((User) e.getTableView().getItems().get(e.getTablePosition().getRow()))
@@ -139,6 +141,7 @@ public class UsersController implements Initializable {
                 user.setModified(true);
                 btnSave.setVisible(true);
                 btnCancel.setVisible(true);
+                General.needsSave = true;
             }
         });
 
@@ -328,12 +331,15 @@ public class UsersController implements Initializable {
     }
 
     @FXML public void registerUser() throws IOException {
+        General.needsSave = true;
     	Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/views/RegisterUser.fxml"))));
         stage.setMaximized(false);
         stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
         getUsers();
+        General.needsSave = false;
     }
 
     @FXML public void cancel() {
@@ -341,7 +347,7 @@ public class UsersController implements Initializable {
         btnRegisterUser.setDisable(false);
         btnCancel.setVisible(false);
         btnSave.setVisible(false);
-
+        General.needsSave = false;
     }
 
     @FXML public void refresh() {

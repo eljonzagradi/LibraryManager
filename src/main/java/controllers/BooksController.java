@@ -149,10 +149,11 @@ public class BooksController implements Initializable {
         ResultSet result = null;
         String book = null, category = null, barcode = null;
 
-        String sqlQuery =
-            "SELECT bookID, title, barcode, category, num_pages,\n" +
-            "language, author, publisher, copies FROM books\n" +
-            "WHERE title LIKE ? AND category LIKE ? AND barcode LIKE ? ";
+        String sqlQuery = 
+        		"SELECT bookID, title, barcode, category, num_pages, language, author, publisher,\n"
+        		+ "    copies - COALESCE((SELECT SUM(status = 'BORROWED')\n"
+        		+ "    FROM borrowed_books bb WHERE bb.bookID = b.bookID), 0) AS available_copies\n"
+        		+ "FROM books b WHERE title LIKE ? AND category LIKE ? AND barcode LIKE ?;";
 
         if (txtBookTitle.getText() == null) {
             book = "";
@@ -341,6 +342,7 @@ public class BooksController implements Initializable {
         btnEdit.setDisable(true);
         tblBooks.setDisable(true);
         pane.requestFocus();
+        General.needsSave = true;
 
     }
 
@@ -364,6 +366,7 @@ public class BooksController implements Initializable {
             btnEdit.setDisable(true);
             tblBooks.setDisable(true);
             pane.requestFocus();
+            General.needsSave = true;
 
         } else {
             General.WARNING("Warning", "Please select the record you want to edit !");
@@ -468,6 +471,8 @@ public class BooksController implements Initializable {
         btnRegister.setDisable(false);
         btnEdit.setDisable(false);
         tblBooks.setDisable(false);
+        General.needsSave = false;
+        tblBooks.getSelectionModel().clearSelection();
     }
 
     @FXML public void downloadTemplate() throws Exception {

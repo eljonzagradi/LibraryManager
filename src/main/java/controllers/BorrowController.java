@@ -76,41 +76,70 @@ public class BorrowController implements Initializable {
 
         txtStudentBarcode.textProperty().addListener(e -> getStudents());
         txtBookBarcode.textProperty().addListener(e -> getBooks());
-    	txtSearchBook.textProperty().addListener(e -> getBorrows());
-    	txtSearchStudent.textProperty().addListener(e -> getBorrows());
-        
+        txtSearchBook.textProperty().addListener(e -> getBorrows());
+        txtSearchStudent.textProperty().addListener(e -> getBorrows());
+
         tblColBook.setCellValueFactory(new PropertyValueFactory < > ("book"));
         tblColStudent.setCellValueFactory(new PropertyValueFactory < > ("student"));
         tblColStart.setCellValueFactory(new PropertyValueFactory < > ("start"));
         tblColDue.setCellValueFactory(new PropertyValueFactory < > ("due"));
         tblColStatus.setCellValueFactory(new PropertyValueFactory < > ("status"));
         
+        tblBorrows.getSelectionModel().selectedItemProperty()
+        .addListener((options, oldValue, newValue) -> {
+        	
+        	if(newValue != null && newValue != oldValue) {
+        		setStart(newValue.getStart().toLocalDate());
+        		setDue(newValue.getDue().toLocalDate());
+        		txtStart.clear();
+        		txtDue.clear();
+        		currentYearMonth = YearMonth.of
+        				(newValue.getStart().toLocalDate().getYear(),
+        				newValue.getStart().toLocalDate().getMonth());		
+        		populateCalendar(currentYearMonth);
+
+        	}
+        	
+        });
+
         try {
-			checkStatus();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+            checkStatus();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
 
         txtBookBarcode.setOnMouseClicked(e -> {
             if (e.getClickCount() == 3) {
-                txtBookBarcode.clear();
-                txtBook.setText(null);
-                General.bookBarcode = null;
-                lvBooks.getItems().clear();
-                books.clear();
+
+                if (txtBookBarcode.isEditable()) {
+                    txtBookBarcode.clear();
+                    txtBook.setText(null);
+                    General.bookBarcode = null;
+                    lvBooks.getItems().clear();
+                    books.clear();
+                } else {
+                    borrow();
+                }
 
             }
+
         });
 
         txtStudentBarcode.setOnMouseClicked(e -> {
             if (e.getClickCount() == 3) {
-                txtStudentBarcode.clear();
-                txtStudent.setText(null);
-                General.studentBarcode = null;
-                lvStudents.getItems().clear();
-                students.clear();
+
+                if (txtStudentBarcode.isEditable()) {
+                    txtStudentBarcode.clear();
+                    txtStudent.setText(null);
+                    General.studentBarcode = null;
+                    lvStudents.getItems().clear();
+                    students.clear();
+                } else {
+                    borrow();
+                }
 
             }
+
         });
 
         lvBooks.setOnMouseClicked(e -> {
@@ -135,13 +164,6 @@ public class BorrowController implements Initializable {
             }
         });
 
-        tgStart.setOnAction(e -> {
-            setStart(LocalDate.now());
-            setDue(LocalDate.now().plusWeeks(2));
-            tgDue.setDisable(false);
-            populateCalendar(currentYearMonth);
-        });
-        
         getBorrows();
         CalendarView(YearMonth.now());
     }
@@ -294,18 +316,18 @@ public class BorrowController implements Initializable {
     }
 
     public void getBorrows() {
-    	
-    	borrows.clear();
+
+        borrows.clear();
         PreparedStatement select = null;
         ResultSet result = null;
 
-        String sqlQuery = 
-        		"SELECT borrowedID, s.student , b.title, startDate, dueDate, status FROM borrowed_books bb\n"
-        		+ "INNER JOIN students s ON s.studentID = bb.studentID\n"
-        		+ "INNER JOIN books b ON b.bookID = bb.bookID WHERE s.student LIKE ? AND b.title LIKE ?;";
-        
+        String sqlQuery =
+            "SELECT borrowedID, s.student , b.title, startDate, dueDate, status FROM borrowed_books bb\n" +
+            "INNER JOIN students s ON s.studentID = bb.studentID\n" +
+            "INNER JOIN books b ON b.bookID = bb.bookID WHERE s.student LIKE ? AND b.title LIKE ? ";
+
         String student = "", book = "";
-        
+
         if (txtSearchBook.getText() == null) {
             book = "";
         } else {
@@ -319,8 +341,8 @@ public class BorrowController implements Initializable {
         }
 
         try {
-        	
-            select = Database.statement(sqlQuery);
+
+            select = Database.statement(sqlQuery + "  ORDER BY status;");
             select.setString(1, student + "%");
             select.setString(2, book + "%");
             result = select.executeQuery();
@@ -342,7 +364,7 @@ public class BorrowController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	
+
             try {
 
                 if (select != null)
@@ -352,7 +374,7 @@ public class BorrowController implements Initializable {
                     result.close();
 
                 tblBorrows.setItems(borrows);
-            	tblBorrows.refresh();
+                tblBorrows.refresh();
 
             } catch (SQLException e) {
                 General.ERROR("Error", e.getMessage());
@@ -361,10 +383,17 @@ public class BorrowController implements Initializable {
         }
 
     }
-    
+
     @FXML public void refresh() {
-    	txtSearchBook.clear();
-    	txtSearchStudent.clear();
+        txtSearchBook.clear();
+        txtSearchStudent.clear();
+        if(btnBorrow.isVisible()) {
+        	setStart(null);
+        	setDue(null);
+        	currentYearMonth = YearMonth.now();
+        	populateCalendar(currentYearMonth);
+        }
+        
     }
 
     public void getStudents() {
@@ -376,9 +405,11 @@ public class BorrowController implements Initializable {
         String student = "";
 
         String sqlQuery =
-            "SELECT DISTINCT studentID, student, grade, barcode, registration_date, sp.name\n" +
+            "SELECT s.studentID, student, grade, barcode, registration_date, sp.name\n" +
             "FROM students s INNER JOIN studyprograms sp ON sp.studyprogramID = s.studyprogramID\n" +
-            "WHERE barcode LIKE ? OR student LIKE ? ;";
+            "WHERE NOT EXISTS \n" +
+            "(SELECT 1 FROM borrowed_books b WHERE b.studentID = s.studentID AND b.status = 'BORROWED') \n" +
+            "AND (barcode LIKE ? OR student LIKE ?);";
 
         if (txtStudentBarcode.getText() == null) {
             student = "";
@@ -436,9 +467,11 @@ public class BorrowController implements Initializable {
         String book = "";
 
         String sqlQuery =
-            "SELECT DISTINCT bookID, title, barcode, category, num_pages,\n" +
-            "language, author, publisher, copies FROM books\n" +
-            "WHERE barcode LIKE ? OR title LIKE ? ";
+            "WITH available_books AS (\n" +
+            "SELECT bookID, title, barcode, category, num_pages, language, author, publisher, copies,\n" +
+            "copies - COALESCE((SELECT SUM(status = 'BORROWED') FROM borrowed_books\n" +
+            "WHERE borrowed_books.bookID = books.bookID), 0) AS available_copies FROM books )\n" +
+            "SELECT * FROM available_books WHERE available_copies <> 0 AND (barcode LIKE ? OR title LIKE ?);";
 
         if (txtBookBarcode.getText() == null) {
             book = "";
@@ -493,10 +526,10 @@ public class BorrowController implements Initializable {
 
     @FXML public void save() {
 
-        if (txtStudentBarcode.getText() == null ||
-            txtStudentBarcode.getText().trim().isEmpty() ||
-            txtBookBarcode.getText() == null ||
-            txtBookBarcode.getText().trim().isEmpty() ||
+        if (txtStudent.getText() == null ||
+            txtStudent.getText().trim().isEmpty() ||
+            txtBook.getText() == null ||
+            txtBook.getText().trim().isEmpty() ||
             txtStart.getText() == null ||
             txtStart.getText().trim().isEmpty() ||
             txtDue.getText() == null ||
@@ -546,6 +579,7 @@ public class BorrowController implements Initializable {
         setStart(null);
         setDue(null);
         tgDue.setSelected(false);
+        tblBorrows.setDisable(false);
         populateCalendar(currentYearMonth);
         btnBorrow.setVisible(true);
         btnReturn.setVisible(true);
@@ -563,6 +597,8 @@ public class BorrowController implements Initializable {
         lvBooks.getItems().clear();
         students.clear();
         books.clear();
+        General.needsSave = false;
+        pane.requestFocus();
 
     }
 
@@ -571,6 +607,7 @@ public class BorrowController implements Initializable {
         setStart(LocalDate.now());
         setDue(LocalDate.now().plusWeeks(2));
         tgDue.setSelected(true);
+        currentYearMonth = YearMonth.now();
         populateCalendar(currentYearMonth);
         btnBorrow.setVisible(false);
         btnReturn.setVisible(false);
@@ -580,41 +617,49 @@ public class BorrowController implements Initializable {
         btnCancel.setVisible(true);
         txtBookBarcode.setEditable(true);
         txtStudentBarcode.setEditable(true);
+        tblBorrows.setDisable(true);
+        tblBorrows.refresh();
+        txtStudentBarcode.requestFocus();
+        General.needsSave = true;
     }
 
     @FXML public void returnBook() {
 
         if (tblBorrows.getSelectionModel().getSelectedItem() != null) {
             Borrow borrow = tblBorrows.getSelectionModel().getSelectedItem();
-            
-            if(!borrow.getStatus().equals("BORROWED")) {
+
+            if (!borrow.getStatus().equals("BORROWED")) {
                 General.WARNING("Warning", "This book has been already returned !");
                 return;
             }
-            
-            if(!General.CONFIRMATION("Confirmation !", "Do you want to return this book !")) {
-        	  return;
+
+            if (!General.CONFIRMATION("Confirmation !", "Do you want to return this book !")) {
+                return;
             }
-            
+
             int borrowID = borrow.getBorrowID();
             LocalDate dueDate = borrow.getDue().toLocalDate();
             PreparedStatement update = null;
             String status = null;
-            
-            if(dueDate.isAfter(LocalDate.now())) {
-            	status = "RETURNED EARLY";            	
-            } else if(dueDate.isEqual(LocalDate.now())) {
-            	status = "RETURNED";            	            	
+
+            if (dueDate.isAfter(LocalDate.now())) {
+                status = "RETURNED EARLY";
+            } else if (dueDate.isEqual(LocalDate.now())) {
+                status = "RETURNED";
             } else {
-            	status = "RETURNED LATE";            	            	            	
+                status = "RETURNED LATE";
             }
-            
-            String sqlQuery = "UPDATE `borrowed_books` SET`status` = ? WHERE borrowedID = ?;";
+
+            String sqlQuery = 
+            		"UPDATE `borrowed_books`\n"
+            		+ "SET `dueDate` = ?, `status` = ?\n"
+            		+ "WHERE `borrowedID` = ?";
 
             try {
                 update = Database.statement(sqlQuery);
-                update.setString(1, status);
-                update.setInt(2, borrowID);
+                update.setDate(1, Date.valueOf(LocalDate.now()));
+                update.setString(2, status);
+                update.setInt(3, borrowID);
                 update.executeUpdate();
             } catch (SQLException e) {
                 General.ERROR("Error", e.getMessage());
@@ -645,7 +690,7 @@ public class BorrowController implements Initializable {
         currentYearMonth = currentYearMonth.minusMonths(1);
         populateCalendar(currentYearMonth);
     }
-    
+
     public void checkStatus() throws Exception {
         tblBorrows.refresh();
         tblColStatus.setCellFactory(
@@ -672,13 +717,13 @@ public class BorrowController implements Initializable {
                                 if (status.equals("BORROWED"))
                                     setStyle("-fx-background-color: red;" +
                                         " -fx-border-color: white;" +
-                                        " -fx-border-width: 0.5;"
-                                        + "-fx-text-fill: white");
+                                        " -fx-border-width: 0.5;" +
+                                        "-fx-text-fill: white");
                                 else
-                                	 setStyle("-fx-background-color: green;" +
-                                             " -fx-border-color: white;" +
-                                             " -fx-border-width: 0.5;"
-                                             + "-fx-text-fill: white");
+                                    setStyle("-fx-background-color: green;" +
+                                        " -fx-border-color: white;" +
+                                        " -fx-border-width: 0.5;" +
+                                        "-fx-text-fill: white");
                             }
                         }
                     };

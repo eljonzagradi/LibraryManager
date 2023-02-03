@@ -80,50 +80,75 @@ public class MainPageController implements Initializable {
     }
         
     @FXML public void openBorrow() {
+    	
+    	if(General.needsSave)
+    		if(!General.CONFIRMATION
+    				("Confirmation", "You have unsaved changes.\nDo you want to continue ?"))
+    			return;   	
 
         PageLoader loader = new PageLoader();
         Pane view = loader.getPage("Borrowings");
         stackpane.getChildren().clear();
         stackpane.getChildren().add(view);
-//        borderpane.setCenter(view);
-
+        General.needsSave = false;
+        
     }
     
     @FXML public void openUni() {
+    	
+    	if(General.needsSave)
+    		if(!General.CONFIRMATION
+    				("Confirmation", "You have unsaved changes.\nDo you want to continue ?"))
+    			return; 
 
         PageLoader loader = new PageLoader();
         Pane view = loader.getPage("University");
         stackpane.getChildren().clear();
         stackpane.getChildren().add(view);
-//        borderpane.setCenter(view);
+        General.needsSave = false;
 
     }
 
     @FXML public void openStudents() {
+    	
+    	if(General.needsSave)
+    		if(!General.CONFIRMATION
+    				("Confirmation", "You have unsaved changes.\nDo you want to continue ?"))
+    			return; 
 
         PageLoader loader = new PageLoader();
         Pane view = loader.getPage("Students");
         stackpane.getChildren().clear();
         stackpane.getChildren().add(view);
-//        borderpane.setCenter(view);
+        General.needsSave = false;
     }
 
     @FXML public void openBooks() {
+    	
+    	if(General.needsSave)
+    		if(!General.CONFIRMATION
+    				("Confirmation", "You have unsaved changes.\nDo you want to continue ?"))
+    			return; 
 
         PageLoader loader = new PageLoader();
         Pane view = loader.getPage("Books");
         stackpane.getChildren().clear();
         stackpane.getChildren().add(view);
-//        borderpane.setCenter(view);
+        General.needsSave = false;
     }
 
     @FXML public void openUsers() {
+    	
+    	if(General.needsSave)
+    		if(!General.CONFIRMATION
+    				("Confirmation", "You have unsaved changes.\nDo you want to continue ?"))
+    			return; 
 
         PageLoader loader = new PageLoader();
         Pane view = loader.getPage("Users");
         stackpane.getChildren().clear();
         stackpane.getChildren().add(view);
-//        borderpane.setCenter(view);
+        General.needsSave = false;
 
     }
 

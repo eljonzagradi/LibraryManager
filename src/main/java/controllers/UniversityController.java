@@ -250,7 +250,6 @@ public class UniversityController implements Initializable {
                     result.close();
 
                 tblStudyPrograms.setItems(studyprograms);
-                anpane.requestFocus();
 
             } catch (SQLException e) {
                 General.ERROR("Error", e.getMessage());
@@ -264,6 +263,7 @@ public class UniversityController implements Initializable {
         tblStudyPrograms.setDisable(true);
         hBoxSP.setDisable(true);
         set(true);
+        General.needsSave = true;
     }
 
     @FXML public void saveUni() {
@@ -346,6 +346,7 @@ public class UniversityController implements Initializable {
 
                 getUniDetails();
                 set(false);
+                General.needsSave = false;
                 tblStudyPrograms.setDisable(false);
                 hBoxSP.setDisable(false);
                 General.INFORMATION("Success !", "Changes saved successfully !");
@@ -363,6 +364,7 @@ public class UniversityController implements Initializable {
         tblStudyPrograms.setDisable(false);
         hBoxSP.setDisable(false);
         set(false);
+        General.needsSave = false;
     }
 
     @FXML public void addStudyProgram() {
@@ -375,6 +377,7 @@ public class UniversityController implements Initializable {
         paneStudyPrograms.setVisible(true);
         hBoxSP.setDisable(true);
         metoda = "SHTO";
+        General.needsSave = true;
     }
 
     @FXML public void deleteStudyProgram() {
@@ -428,6 +431,7 @@ public class UniversityController implements Initializable {
             paneStudyPrograms.setVisible(true);
             hBoxSP.setDisable(true);
             metoda = "EDIT";
+            General.needsSave = true;
         } else {
             General.WARNING("Warning", "Please select the record you want to edit !");
         }
@@ -439,6 +443,8 @@ public class UniversityController implements Initializable {
         paneStudyPrograms.setVisible(false);
         hBoxSP.setDisable(false);
         metoda = null;
+        General.needsSave = false;
+        tblStudyPrograms.getSelectionModel().clearSelection();
     }
 
     @FXML public void saveStudyProgram() {

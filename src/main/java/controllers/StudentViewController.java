@@ -116,11 +116,12 @@ public class StudentViewController implements Initializable {
         PreparedStatement select = null;
         ResultSet result = null;
         String book = null, category = null, barcode = null;
-
-        String sqlQuery =
-            "SELECT bookID, title, barcode, category, num_pages,\n" +
-            "language, author, publisher, copies FROM books\n" +
-            "WHERE title LIKE ? AND category LIKE ? AND barcode LIKE ? ";
+        
+        String sqlQuery = 
+        		"SELECT bookID, title, barcode, category, num_pages, language, author, publisher,\n"
+        		+ "    copies - COALESCE((SELECT SUM(status = 'BORROWED')\n"
+        		+ "    FROM borrowed_books bb WHERE bb.bookID = b.bookID), 0) AS available_copies\n"
+        		+ "FROM books b WHERE title LIKE ? AND category LIKE ? AND barcode LIKE ?;";
 
         if (txtBookTitle.getText() == null) {
             book = "";

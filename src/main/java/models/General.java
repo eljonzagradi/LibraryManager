@@ -21,6 +21,7 @@ public class General {
 	public static int userCategory;
 	public static String studentBarcode = null;
 	public static String bookBarcode = null;
+	public static boolean needsSave = false;
 
     public static String encrypt(String key, String initVector, String value) {
         try {
