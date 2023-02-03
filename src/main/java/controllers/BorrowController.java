@@ -18,15 +18,18 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import models.Book;
 import models.Borrow;
 import models.Database;
@@ -44,7 +47,8 @@ public class BorrowController implements Initializable {
     @FXML private ToggleButton tgStart;
     @FXML private ToggleButton tgDue;
 
-    @FXML private TextField txtBook, txtStudent, txtStudentBarcode, txtBookBarcode, txtStart, txtDue;
+    @FXML private TextField txtBook, txtStudent, txtStudentBarcode, txtBookBarcode,
+    txtStart, txtDue, txtSearchStudent, txtSearchBook;
 
     @FXML private Text lblMonth;
     @FXML private Label lblMonday, lblTuesday, lblWednesday, lblThursday, lblFriday, lblSaturday, lblSunday;
@@ -52,7 +56,7 @@ public class BorrowController implements Initializable {
     @FXML private ListView < Book > lvBooks;
     @FXML private ListView < Student > lvStudents;
 
-    @FXML private TableView < Borrow > tblBorrow;
+    @FXML private TableView < Borrow > tblBorrows;
     @FXML private TableColumn < Borrow, String > tblColBook;
     @FXML private TableColumn < Borrow, Date > tblColDue;
     @FXML private TableColumn < Borrow, Date > tblColStart;
@@ -62,6 +66,7 @@ public class BorrowController implements Initializable {
     private ArrayList < DayNode > allCalendarDays = new ArrayList < > (42);
     private YearMonth currentYearMonth;
     private LocalDate start, due;
+    private ObservableList < Borrow > borrows = FXCollections.observableArrayList();
     private ObservableList < Student > students = FXCollections.observableArrayList();
     private ObservableList < Book > books = FXCollections.observableArrayList();
     private int bookID = 0, studentID = 0;
@@ -71,48 +76,62 @@ public class BorrowController implements Initializable {
 
         txtStudentBarcode.textProperty().addListener(e -> getStudents());
         txtBookBarcode.textProperty().addListener(e -> getBooks());
+    	txtSearchBook.textProperty().addListener(e -> getBorrows());
+    	txtSearchStudent.textProperty().addListener(e -> getBorrows());
         
+        tblColBook.setCellValueFactory(new PropertyValueFactory < > ("book"));
+        tblColStudent.setCellValueFactory(new PropertyValueFactory < > ("student"));
+        tblColStart.setCellValueFactory(new PropertyValueFactory < > ("start"));
+        tblColDue.setCellValueFactory(new PropertyValueFactory < > ("due"));
+        tblColStatus.setCellValueFactory(new PropertyValueFactory < > ("status"));
+        
+        try {
+			checkStatus();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
         txtBookBarcode.setOnMouseClicked(e -> {
             if (e.getClickCount() == 3) {
-            	txtBookBarcode.clear();
-            	txtBook.setText(null);
-            	General.bookBarcode = null;
-            	lvBooks.getItems().clear();
-            	books.clear();
-            	
+                txtBookBarcode.clear();
+                txtBook.setText(null);
+                General.bookBarcode = null;
+                lvBooks.getItems().clear();
+                books.clear();
+
             }
         });
-        
+
         txtStudentBarcode.setOnMouseClicked(e -> {
             if (e.getClickCount() == 3) {
-            	txtStudentBarcode.clear();
-            	txtStudent.setText(null);
-            	General.studentBarcode = null;
-            	lvStudents.getItems().clear();
-            	students.clear();
-            	
+                txtStudentBarcode.clear();
+                txtStudent.setText(null);
+                General.studentBarcode = null;
+                lvStudents.getItems().clear();
+                students.clear();
+
             }
         });
-        
+
         lvBooks.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2 
-            		&& lvBooks.getSelectionModel()
-            		.getSelectedItem() != null ) {
-            	txtBook.setText(lvBooks.getSelectionModel()
-                		.getSelectedItem().getTitle());
-            	bookID = lvBooks.getSelectionModel()
-                		.getSelectedItem().getBookID();
+            if (e.getClickCount() == 2 &&
+                lvBooks.getSelectionModel()
+                .getSelectedItem() != null) {
+                txtBook.setText(lvBooks.getSelectionModel()
+                    .getSelectedItem().getTitle());
+                bookID = lvBooks.getSelectionModel()
+                    .getSelectedItem().getBookID();
             }
         });
-        
+
         lvStudents.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2 
-            		&& lvStudents.getSelectionModel()
-            		.getSelectedItem() != null ) {
-            	txtStudent.setText(lvStudents.getSelectionModel()
-                		.getSelectedItem().getFullName());
-            	studentID = lvStudents.getSelectionModel()
-                		.getSelectedItem().getStudentID();
+            if (e.getClickCount() == 2 &&
+                lvStudents.getSelectionModel()
+                .getSelectedItem() != null) {
+                txtStudent.setText(lvStudents.getSelectionModel()
+                    .getSelectedItem().getFullName());
+                studentID = lvStudents.getSelectionModel()
+                    .getSelectedItem().getStudentID();
             }
         });
 
@@ -122,7 +141,8 @@ public class BorrowController implements Initializable {
             tgDue.setDisable(false);
             populateCalendar(currentYearMonth);
         });
-
+        
+        getBorrows();
         CalendarView(YearMonth.now());
     }
 
@@ -274,11 +294,81 @@ public class BorrowController implements Initializable {
     }
 
     public void getBorrows() {
+    	
+    	borrows.clear();
+        PreparedStatement select = null;
+        ResultSet result = null;
 
+        String sqlQuery = 
+        		"SELECT borrowedID, s.student , b.title, startDate, dueDate, status FROM borrowed_books bb\n"
+        		+ "INNER JOIN students s ON s.studentID = bb.studentID\n"
+        		+ "INNER JOIN books b ON b.bookID = bb.bookID WHERE s.student LIKE ? AND b.title LIKE ?;";
+        
+        String student = "", book = "";
+        
+        if (txtSearchBook.getText() == null) {
+            book = "";
+        } else {
+            book = txtSearchBook.getText();
+        }
+
+        if (txtSearchStudent.getText() == null) {
+            student = "";
+        } else {
+            student = txtSearchStudent.getText();
+        }
+
+        try {
+        	
+            select = Database.statement(sqlQuery);
+            select.setString(1, student + "%");
+            select.setString(2, book + "%");
+            result = select.executeQuery();
+
+            while (result.next()) {
+
+                borrows.add(
+                    new Borrow(
+                        result.getInt(1),
+                        result.getString(2),
+                        result.getString(3),
+                        result.getDate(4),
+                        result.getDate(5),
+                        result.getString(6)
+                    ));
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	
+            try {
+
+                if (select != null)
+                    select.close();
+
+                if (result != null)
+                    result.close();
+
+                tblBorrows.setItems(borrows);
+            	tblBorrows.refresh();
+
+            } catch (SQLException e) {
+                General.ERROR("Error", e.getMessage());
+            }
+
+        }
+
+    }
+    
+    @FXML public void refresh() {
+    	txtSearchBook.clear();
+    	txtSearchStudent.clear();
     }
 
     public void getStudents() {
-    	
+
         lvStudents.getItems().clear();
         students.clear();
         PreparedStatement select = null;
@@ -338,7 +428,7 @@ public class BorrowController implements Initializable {
     }
 
     public void getBooks() {
-    	
+
         lvBooks.getItems().clear();
         books.clear();
         PreparedStatement select = null;
@@ -403,11 +493,57 @@ public class BorrowController implements Initializable {
 
     @FXML public void save() {
 
+        if (txtStudentBarcode.getText() == null ||
+            txtStudentBarcode.getText().trim().isEmpty() ||
+            txtBookBarcode.getText() == null ||
+            txtBookBarcode.getText().trim().isEmpty() ||
+            txtStart.getText() == null ||
+            txtStart.getText().trim().isEmpty() ||
+            txtDue.getText() == null ||
+            txtDue.getText().trim().isEmpty()
+
+        ) {
+
+            General.WARNING("Warning", "Please complete all the required fields to continue");
+            return;
+        }
+
+        PreparedStatement insert = null;
+        String sqlQuery =
+            "INSERT INTO `borrowed_books`\n" +
+            "(`bookID`, `studentID`, `startDate`, `dueDate`)\n" +
+            "VALUES (?,?,?,?);";
+
+        try {
+
+            insert = Database.statement(sqlQuery);
+            insert.setInt(1, bookID);
+            insert.setInt(2, studentID);
+            insert.setDate(3, Date.valueOf(getStart()));
+            insert.setDate(4, Date.valueOf(getDue()));
+            insert.execute();
+
+        } catch (SQLException e) {
+            General.ERROR("Error", e.getMessage());
+            return;
+        } finally {
+
+            try {
+                if (insert != null)
+                    insert.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            cancel();
+            getBorrows();
+        }
+
     }
 
     @FXML public void cancel() {
-        
-    	setStart(null);
+
+        setStart(null);
         setDue(null);
         tgDue.setSelected(false);
         populateCalendar(currentYearMonth);
@@ -427,7 +563,7 @@ public class BorrowController implements Initializable {
         lvBooks.getItems().clear();
         students.clear();
         books.clear();
-        
+
     }
 
     @FXML public void borrow() {
@@ -448,6 +584,56 @@ public class BorrowController implements Initializable {
 
     @FXML public void returnBook() {
 
+        if (tblBorrows.getSelectionModel().getSelectedItem() != null) {
+            Borrow borrow = tblBorrows.getSelectionModel().getSelectedItem();
+            
+            if(!borrow.getStatus().equals("BORROWED")) {
+                General.WARNING("Warning", "This book has been already returned !");
+                return;
+            }
+            
+            if(!General.CONFIRMATION("Confirmation !", "Do you want to return this book !")) {
+        	  return;
+            }
+            
+            int borrowID = borrow.getBorrowID();
+            LocalDate dueDate = borrow.getDue().toLocalDate();
+            PreparedStatement update = null;
+            String status = null;
+            
+            if(dueDate.isAfter(LocalDate.now())) {
+            	status = "RETURNED EARLY";            	
+            } else if(dueDate.isEqual(LocalDate.now())) {
+            	status = "RETURNED";            	            	
+            } else {
+            	status = "RETURNED LATE";            	            	            	
+            }
+            
+            String sqlQuery = "UPDATE `borrowed_books` SET`status` = ? WHERE borrowedID = ?;";
+
+            try {
+                update = Database.statement(sqlQuery);
+                update.setString(1, status);
+                update.setInt(2, borrowID);
+                update.executeUpdate();
+            } catch (SQLException e) {
+                General.ERROR("Error", e.getMessage());
+            } finally {
+                try {
+
+                    if (update != null)
+                        update.close();
+                    getBorrows();
+
+                } catch (SQLException e) {
+                    General.ERROR("Error", e.getMessage());
+                }
+            }
+
+        } else {
+            General.WARNING("Warning", "Please select the book you want to return !");
+        }
+
     }
 
     @FXML public void next() {
@@ -458,6 +644,47 @@ public class BorrowController implements Initializable {
     @FXML public void prev() {
         currentYearMonth = currentYearMonth.minusMonths(1);
         populateCalendar(currentYearMonth);
+    }
+    
+    public void checkStatus() throws Exception {
+        tblBorrows.refresh();
+        tblColStatus.setCellFactory(
+            new Callback < TableColumn < Borrow, String > , TableCell < Borrow, String >> () {
+                @Override
+                public TableCell < Borrow, String > call(TableColumn < Borrow, String > p) {
+                    return new TableCell < Borrow, String > () {
+
+                        @Override
+                        public void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+
+                            if (empty || item == null) {
+                                setText(null);
+                                setGraphic(null);
+                            } else {
+
+                                setText(item.toString());
+
+                                Borrow row = tblBorrows.getItems().get(getIndex());
+
+                                String status = tblColStatus.getCellObservableValue(row).getValue();
+
+                                if (status.equals("BORROWED"))
+                                    setStyle("-fx-background-color: red;" +
+                                        " -fx-border-color: white;" +
+                                        " -fx-border-width: 0.5;"
+                                        + "-fx-text-fill: white");
+                                else
+                                	 setStyle("-fx-background-color: green;" +
+                                             " -fx-border-color: white;" +
+                                             " -fx-border-width: 0.5;"
+                                             + "-fx-text-fill: white");
+                            }
+                        }
+                    };
+                }
+            });
+
     }
 
     public static class DayNode extends Label {

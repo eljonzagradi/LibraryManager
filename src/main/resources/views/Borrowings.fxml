@@ -22,7 +22,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="816.0" prefWidth="1236.0" style="-fx-background-color: #ddddc6;" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BorrowController">
    <children>
-      <TableView fx:id="tblBorrow" layoutX="79.0" layoutY="124.0" prefHeight="566.0" prefWidth="682.0">
+      <TableView fx:id="tblBorrows" layoutX="79.0" layoutY="124.0" prefHeight="566.0" prefWidth="682.0">
         <columns>
           <TableColumn fx:id="tblColStudent" prefWidth="75.0" text="Student" />
           <TableColumn fx:id="tblColBook" prefWidth="75.0" text="Book" />
@@ -191,5 +191,22 @@
       </Pane>
       <Button fx:id="btnBorrow" layoutX="686.0" layoutY="697.0" mnemonicParsing="false" onAction="#borrow" prefHeight="30.0" prefWidth="74.0" text="Borrow" />
       <Button fx:id="btnReturn" layoutX="593.0" layoutY="697.0" mnemonicParsing="false" onAction="#returnBook" prefHeight="30.0" prefWidth="82.0" text="Return" />
+      <Label fx:id="lblStudent" layoutX="151.0" layoutY="54.0" prefHeight="18.0" prefWidth="180.0" text="Student:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtSearchStudent" layoutX="151.0" layoutY="76.0" prefHeight="36.8" prefWidth="180.0" promptText="Search Student" />
+      <Button fx:id="btnRefresh" layoutX="611.0" layoutY="79.0" mnemonicParsing="false" onAction="#refresh" prefHeight="30.0" prefWidth="74.0" text="Refresh">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblStudent1" layoutX="383.0" layoutY="54.0" prefHeight="18.0" prefWidth="180.0" text="Book:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtSearchBook" layoutX="383.0" layoutY="76.0" prefHeight="36.8" prefWidth="180.0" promptText="Search Book" />
    </children>
     </AnchorPane>

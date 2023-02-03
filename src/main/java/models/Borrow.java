@@ -4,20 +4,25 @@ import java.sql.Date;
 
 public class Borrow {
 	
+	private int borrowID;
 	private String student;
 	private String book;
 	private Date start;
 	private Date due;
-	private int studentID, bookID;
+	private String status;
 	
-	public Borrow(String student,int studentID, String book, int bookID, Date start, Date due) {
+	public Borrow(int borrowID,String student, String book, Date start, Date due, String status) {
 		super();
+		this.borrowID = borrowID;
 		this.student = student;
 		this.book = book;
 		this.start = start;
 		this.due = due;
-		this.studentID = studentID;
-		this.bookID = bookID;
+		this.status = status;
+	}
+
+	public int getBorrowID() {
+		return borrowID;
 	}
 
 	public String getStudent() {
@@ -36,12 +41,12 @@ public class Borrow {
 		return due;
 	}
 
-	public int getStudentID() {
-		return studentID;
+	public String getStatus() {
+		return status;
 	}
 
-	public int getBookID() {
-		return bookID;
+	public void setBorrowID(int borrowID) {
+		this.borrowID = borrowID;
 	}
 
 	public void setStudent(String student) {
@@ -60,12 +65,8 @@ public class Borrow {
 		this.due = due;
 	}
 
-	public void setStudentID(int studentID) {
-		this.studentID = studentID;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-
-	public void setBookID(int bookID) {
-		this.bookID = bookID;
-	}
-
+	
 }
