@@ -15,9 +15,15 @@ import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.openjfx.MavenJavaFX.App;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -30,7 +36,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import models.Database;
 import models.General;
 
@@ -180,7 +188,7 @@ public class RegisterUniversityController implements Initializable {
 
     }
 
-    @FXML public void saveAdmin(ActionEvent event) {
+    @FXML public void saveAdmin(ActionEvent event) throws IOException {
 
         if (txtUsername.getText().trim() == null ||
             txtUsername.getText().trim().isEmpty() ||
@@ -235,8 +243,35 @@ public class RegisterUniversityController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
+            
+            General.INFORMATION("Success", "The registration was successfull");
             ((Stage)(((Button) event.getSource()).getScene().getWindow())).close();
+            Stage stage = new Stage();
+            App.root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+            App.scene = new Scene(App.root);
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
+            stage.setScene(App.scene);
+            stage.setTitle("myLibrary.al");
+            stage.setResizable(true);
+            stage.setMaximized(true);
+            stage.show();
+            App.root.requestFocus();
+
+            stage.setOnCloseRequest(new EventHandler < WindowEvent > () {
+                @Override
+				public void handle(WindowEvent we) {
+                    try {
+                        System.exit(1);
+                        Database.disconnect();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        
 
         }
 

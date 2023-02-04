@@ -33,14 +33,10 @@ public class App extends Application {
 
             root = FXMLLoader.load(getClass().getResource("/views/RegisterUniversity.fxml"));
             scene = new Scene(root);
-            Screen screen = Screen.getPrimary();
-            Rectangle2D bounds = screen.getVisualBounds();
-            stage.setWidth(bounds.getWidth());
-            stage.setHeight(bounds.getHeight());
             stage.setScene(scene);
             stage.setTitle("myLibrary.al");
-            stage.setResizable(true);
-            stage.setMaximized(true);
+            stage.setResizable(false);
+            stage.setMaximized(false);
             stage.show();
             root.requestFocus();
 

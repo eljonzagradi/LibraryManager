@@ -9,7 +9,7 @@ public class Database {
 
 	static Connection connection = null;
 
-    static String url = "jdbc:mysql://localhost:3306/eljonzagradi";
+    static String url = "jdbc:mysql://localhost:3306/myLibrary";
     static String user = "root";
     static String password = "root";
 
