@@ -20,7 +20,9 @@ import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -36,6 +38,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import models.Database;
 import models.General;
 import models.StudyProgram;
@@ -45,7 +49,7 @@ public class UniversityController implements Initializable {
     @FXML private AnchorPane anpane;
     @FXML private HBox hbox, hBoxSP;
     @FXML private ImageView imageviewer;
-    @FXML private Button btnUploadImage;
+    @FXML private Button btnUploadImage,btnChangePassword;
 
     @FXML private Button btnEditUni, btnSaveUni, btnCancelUni;
 
@@ -605,7 +609,19 @@ public class UniversityController implements Initializable {
         btnSaveUni.setVisible(x);
         btnCancelUni.setVisible(x);
         btnEditUni.setDisable(x);
+        btnChangePassword.setVisible(!x);
 
+    }
+    
+    @FXML public void changePassword() throws IOException {
+        General.needsSave = true;
+    	Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/views/ChangePassword.fxml"))));
+        stage.setMaximized(false);
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        General.needsSave = false;
     }
 
 }

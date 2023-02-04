@@ -107,5 +107,6 @@
             <Button fx:id="btnCancelStudyProgram" layoutX="320.0" layoutY="74.0" mnemonicParsing="false" onAction="#cancelStudyProgram" prefHeight="26.0" prefWidth="81.0" text="Cancel" />
          </children>
       </Pane>
+      <Button fx:id="btnChangePassword" layoutX="350.0" layoutY="568.0" mnemonicParsing="false" onAction="#changePassword" prefHeight="30.0" prefWidth="170.0" text="Change User Password" />
    </children>
 </AnchorPane>

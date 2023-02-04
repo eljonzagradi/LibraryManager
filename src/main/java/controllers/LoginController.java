@@ -147,6 +147,7 @@ public class LoginController implements Initializable {
 
             } else {
                 General.INFORMATION("Information", "Wrong username or password");
+                txtPassword.clear();
             }
         } catch (Exception e) {
             e.printStackTrace();
